@@ -49,4 +49,4 @@ Process routine: data_proc.py - responsible to get the files from the queue, pro
       python3 app.py
       python3 data_proc.py
 
-- Check the file request_examples.py to see how upload files, get reports and status information.
+- Check request_examples.py file to see how upload files, get reports and status information.
