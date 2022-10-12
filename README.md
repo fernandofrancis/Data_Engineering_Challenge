@@ -33,9 +33,11 @@ Use a SQL database.
 ## Solution
 Data Base: Postgresql SQL database with PostGis extensions. 
 
-Ingestion routine: app.py - rest api to upload the file to the server and put the file in the process queue. Request reports and process status. 
+Ingestion routine: app.py - rest api to upload the file to the server, put the file in the process queue, request reports and process status. 
 
 Process routine: data_proc.py - responsible to get the files from the queue, process and insert into postgres. 
+
+Trips were grouped by points of origin and destination with precision 4 and by time of day.
 
 ## Steps
 - Install PostgreSQL 12 + PostGIS on Ubuntu 20.4 (https://joets.medium.com/install-postgresql-12-postgis-on-ubuntu-20-4-in-5-mins-1b8948545185)
@@ -50,3 +52,7 @@ Process routine: data_proc.py - responsible to get the files from the queue, pro
       python3 data_proc.py
 
 - Check request_examples.py file to see how upload files, get reports and status information.
+
+## Scalability
+- Initiate more data_proc.py to improve processing, since we use queuing to control  the files processing.
+- Deploy more api servers using load balancer to distribute the requests.
