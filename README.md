@@ -69,7 +69,7 @@ Process routine: **data_proc.py** - responsible to get the files from the queue,
 # Test using Docker Container
 
 - Install the docker
-- Load the docker image **app-challange.tar.gz** located in this repository.
+- Load the docker image **app-challange.tar.gz** located in https://drive.google.com/file/d/1AXpioDC1dyRDht1BzaqOOMlg9YBUVjqd/view?usp=sharing
 	 > sudo docker load < app-challange.tar.gz
  - Create a docker volume with name  trips_csv
 	  > sudo docker volume create  trips_csv
