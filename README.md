@@ -79,7 +79,7 @@ Process routine: **data_proc.py** - responsible to get the files from the queue,
  - Run again now with de data_proc.py command
 	  > sudo docker run -v trips_csv:/csv --env-file docker.env -d app-challange python3 data_proc.py 
  - The rest api is ready on port 5001. 
-	 - Request  using bounding box exemple:
+	 - Request  using bounding box example:
 	  > import requests
 	  > url = 'http://localhost:5001/'
       > url_region = 'http://127.0.0.1:5001/weekly/bbox/6.185303,43.436966,10.085449,45.836454'
