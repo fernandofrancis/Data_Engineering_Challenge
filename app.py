@@ -15,10 +15,23 @@ from sqlalchemy import create_engine,text
 
 UPLOAD_FOLDER = '/home/mtuser/Documentos/josity'
 
+post_usu='postgres'
+post_pass='Empresa1'
+post_ip='192.168.1.112'
+post_port='5432'
+post_db='jobsity'
+'''
+UPLOAD_FOLDER=os.environ['CSV_PATH'].strip()
+post_usu=os.environ['POST_USU'].strip()
+post_pass=os.environ['POST_PASS'].strip()
+post_ip=os.environ['POST_IP'].strip()
+post_port=os.environ['POST_PORT'].strip()
+post_db=os.environ['POST_DB'].strip()
+'''
 ######
 
 def create_engeni():
-    engine = create_engine("postgresql://postgres:Empresa1@localhost:5432/jobsity")
+    engine = create_engine("postgresql://"+post_usu+":"+post_pass+"@"+post_ip+":"+post_port+"/"+post_db)
     
     return engine
     
@@ -73,6 +86,7 @@ def upload_file():
 
 @app.route('/weekly/region/<string:region>', methods=['GET'])
 def get_weekly_region(region):
+    region=region.upper()
     stmt= text('''select json_agg(json) from (SELECT sum(qty) as qty,to_char(date_trunc('week',datetime) :: DATE, 'yyyy-mm-dd') AS weekly,region                            
                        FROM trips
                        where region=:region
@@ -109,4 +123,4 @@ if __name__ == "__main__":
 
 
 
-
+#%%

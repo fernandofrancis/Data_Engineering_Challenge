@@ -7,16 +7,15 @@ Created on Mon Oct  3 16:34:35 2022
 """
 import requests
 
-url = 'http://127.0.0.1:5000/'
-#%% Post(upload) File
+url = 'http://localhost:5001/'
+#%% Post(upload) File  
 
-files = {'file': ('trips2.csv', open('/home/mtuser/Downloads/trips.csv', 'rb'),'text/csv')}
+files = {'file': ('trips.csv', open('/home/mtuser/Downloads/trips.csv', 'rb'),'text/csv')}
 
 r = requests.post(url, files=files, verify=False)
-resp=r.json()
-
+print(r.json())
 #%% Get the status of all files
-url_region = 'http://127.0.0.1:5000/jobs/'
+url_region = 'http://127.0.0.1:5001/jobs/'
 r = requests.get(url_region)
 print(r.json())
 #%% Get the status of processed files by uuid
@@ -26,12 +25,12 @@ print(r.json())
 
 #%% Get weekly average number of trips for an area, defined by bounding box
 
-url_region = 'http://127.0.0.1:5000/weekly/bbox/6.185303,43.436966,10.085449,45.836454'
+url_region = 'http://127.0.0.1:5001/weekly/bbox/6.185303,43.436966,10.085449,45.836454'
 r = requests.get(url_region)
 print(r.json())
 
 #%% Get weekly average number of trips for an area, defined by Region
 
-url_region = 'http://127.0.0.1:5000/weekly/region/Turin'
+url_region = 'http://127.0.0.1:5001/weekly/region/Turin'
 r = requests.get(url_region)
 print(r.json())
