@@ -7,10 +7,10 @@ CREATE EXTENSION postgis;
 CREATE TABLE  IF NOT EXISTS  trips (
     id integer PRIMARY KEY,
     region character varying(50),
-    origin_coord public.geography(Point,4326),
-    destination_coord public.geography(Point,4326),
+    origin_coord geography(Point,4326),
+    destination_coord geography(Point,4326),
     datetime timestamp without time zone,
-    geometry public.geometry(LineString,4326),
+    geometry geometry(LineString,4326),
     geometry_wkb bytea,
     qty integer
 );

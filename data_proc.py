@@ -5,6 +5,7 @@ Created on Mon Oct  3 18:54:59 2022
 
 @author: mtuser
 """
+#import os
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import LineString
@@ -14,8 +15,25 @@ from sqlalchemy.orm import sessionmaker
 import time
 
 
-UPLOAD_FOLDER = '/home/mtuser/Documentos/josity/'
+###
 
+UPLOAD_FOLDER = '/home/mtuser/Documentos/josity'
+
+post_usu='postgres'
+post_pass='Empresa1'
+post_ip='192.168.1.112'
+post_port='5432'
+post_db='jobsity'
+
+'''
+UPLOAD_FOLDER=os.environ['CSV_PATH'].strip()
+post_usu=os.environ['POST_USU'].strip()
+post_pass=os.environ['POST_PASS'].strip()
+post_ip=os.environ['POST_IP'].strip()
+post_port=os.environ['POST_PORT'].strip()
+post_db=os.environ['POST_DB'].strip()
+'''
+######
 
 def get_sequence_id(engine,sequence):
     stmt= text("SELECT NEXTVAL(:seq)")
@@ -24,7 +42,7 @@ def get_sequence_id(engine,sequence):
     return result
 
 def create_engeni():
-    engine = create_engine("postgresql://postgres:Empresa1@localhost:5432/jobsity")
+    engine = create_engine("postgresql://"+post_usu+":"+post_pass+"@"+post_ip+":"+post_port+"/"+post_db)
     
     return engine
 
@@ -79,7 +97,7 @@ def gpd_csv_preparation(file):
     ### Add trip's quantity column 
     
     data['qty']=data['datasource'].str.len()
-    
+    data['region']=data['region'].str.upper()    
     return data
 
 def insert_data(data):
@@ -122,9 +140,12 @@ def main_program():
             for row in queue:
                 #print(row[0])
                 update_file_status(row[2],'Running')
-                data=gpd_csv_preparation(UPLOAD_FOLDER+row[1])
-                insert_data(data)
-                update_file_status(row[2],'Processed')
+                try:
+                    data=gpd_csv_preparation(UPLOAD_FOLDER+"/"+row[1])
+                    insert_data(data)
+                    update_file_status(row[2],'Processed')
+                except:
+                    update_file_status(row[2],'Error When Loading file')                
             session.commit()            
         else:        
             print("No file")
